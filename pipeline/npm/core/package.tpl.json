@@ -1,0 +1,17 @@
+{
+  "name": "@nlbridge/core",
+  "version": "{versions.nlbridge}",
+  "license": "MPL-2.0",
+  "description": "The core library content for @nlbridge",
+  "repository": {
+    "directory": "packages/node/core"
+  },
+  "dependencies": {
+    "openai": "^{versions.dependencies.openai}"
+  },
+  "peerDependencies": {},
+  "main": "index.js",
+  "types": "nlbridge-core.d.ts",
+  "module": "esm/nlbridge-core.js",
+  "browser": "umd/nlbridge-core.js"
+}

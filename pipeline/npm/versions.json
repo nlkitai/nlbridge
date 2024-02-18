@@ -1,0 +1,10 @@
+{
+  "inherit": true,
+  "nlbridge": "0.2.6",
+  "peerDependencies": {
+  },
+  "dependencies": {
+    "express": "4.18.2",
+    "openai": "4.26.0"
+  }
+}

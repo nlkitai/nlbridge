@@ -1,0 +1,20 @@
+{
+  "name": "@nlbridge/express",
+  "version": "{versions.nlbridge}",
+  "license": "MPL-2.0",
+  "description": "An express middleware to connect to several LLMs",
+  "repository": {
+    "directory": "packages/node/express"
+  },
+  "dependencies": {
+    "@nlbridge/core": "{versions.nlbridge}"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  },
+  "peerDependencies": {},
+  "main": "index.js",
+  "types": "nlbridge-express.d.ts",
+  "module": "esm/nlbridge-express.js",
+  "browser": "umd/nlbridge-express.js"
+}

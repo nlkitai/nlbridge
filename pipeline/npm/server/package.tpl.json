@@ -1,0 +1,21 @@
+{
+  "name": "@nlbridge/server",
+  "version": "{versions.nlbridge}",
+  "license": "MPL-2.0",
+  "description": "A quick spin-up HTTTP server for dev and testing using @nlbridge/express",
+  "repository": {
+    "directory": "packages/node/nlbridge-server"
+  },
+  "dependencies": {
+    "@nlbridge/express": "{versions.nlbridge}",
+    "express": "^{versions.dependencies.express}"
+  },
+  "peerDependencies": {},
+  "main": "index.js",
+  "bin": {
+    "nlbridge-serve": "./bin/serve.mjs"
+  },
+  "types": "nlbridge-server.d.ts",
+  "module": "esm/nlbridge-server.js",
+  "browser": "umd/nlbridge-server.js"
+}
