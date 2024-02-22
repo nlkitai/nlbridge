@@ -1,5 +1,4 @@
-import {ContextData} from '../../internal/types/context';
+import {ContextData, ContextTaskData} from '../../internal/types/context';
 
-export const inMemoryDemoContextStore: Record<string, {
-    [key: string]: ContextData | undefined;
-} | undefined> = {};
+export const inMemoryDataContextStore: Record<string, ContextData | undefined> = {};
+export const inMemoryTaskContextStore: Record<string, ContextTaskData | undefined> = {};

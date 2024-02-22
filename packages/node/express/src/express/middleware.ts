@@ -1,5 +1,5 @@
-import {ActionHandlerConfig} from '@nlbridge-dev/core/src/internal/types/actionHandlersConfig';
 import {
+    ActionHandlerConfig,
     actionIds,
     asOpenAiChatModel,
     asValidActionId,
@@ -10,6 +10,9 @@ import {
 import {NextFunction, Request, Response} from 'express';
 import {error} from '../utils/error';
 import {warn} from '../utils/warn';
+import {assist} from './actions/assistant/assist';
+import {registerTask} from './actions/assistant/registerTask';
+import {unregisterTask} from './actions/assistant/unregisterTask';
 import {chat} from './actions/chat/chat';
 import {chatStream} from './actions/chat/chatStream';
 import {clearContext} from './actions/context/clearContext';
@@ -135,6 +138,15 @@ export const middleware = (
                 return;
             case 'clear-context':
                 await clearContext(run, payload, req, res);
+                return;
+            case 'register-task':
+                await registerTask(run, payload, req, res);
+                return;
+            case 'unregister-task':
+                await unregisterTask(run, payload, req, res);
+                return;
+            case 'assist':
+                await assist(run, payload, req, res);
                 return;
 
             default:

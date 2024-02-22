@@ -1,27 +1,29 @@
 import {GetContextDataHandler} from '../../interfaces/context/get';
-import {inMemoryDemoContextStore} from './context';
+import {inMemoryDataContextStore, inMemoryTaskContextStore} from './context';
 
 export const getContextData: GetContextDataHandler = async (
     contextId,
     itemId,
     extras,
 ) => {
-    if (!contextId || !inMemoryDemoContextStore[contextId]) {
+    if (!contextId || !inMemoryDataContextStore[contextId]) {
         return {
             success: false,
             error: 'Context not found',
         };
     }
 
-    const context = inMemoryDemoContextStore[contextId]!;
+    const dataContext = inMemoryDataContextStore[contextId];
+    const taskContext = inMemoryTaskContextStore[contextId];
     if (!itemId) {
         return {
             success: true,
-            data: context,
+            data: dataContext,
+            tasks: taskContext,
         };
     }
 
-    if (!context[itemId]) {
+    if ((!dataContext || !dataContext[itemId]) && (!taskContext || !taskContext[itemId])) {
         return {
             success: false,
             error: 'Item not found',
@@ -30,6 +32,9 @@ export const getContextData: GetContextDataHandler = async (
 
     return {
         success: true,
-        data: context[itemId],
+        data: (dataContext && dataContext[itemId]) ? dataContext[itemId] : undefined,
+        tasks: (taskContext && taskContext[itemId]) ? ({
+            [itemId]: taskContext[itemId]!,
+        }) : undefined,
     };
 };

@@ -1,14 +1,27 @@
-# nlbridge 🌲✨🌉
+# nlbridge
 
-![Free And Open Source](https://img.shields.io/badge/Free%20%26%20Open%20Source-1ccb61)
-[![npm version](https://img.shields.io/badge/NPM-@nlbridge/express-1ccb61)](https://www.npmjs.com/package/@nlbridge/express)
-[![Docs nlbridge.dev](https://img.shields.io/badge/Docs_Website-nlbridge.dev-fa896b)](https://nlbridge.dev)
+<p align=center>
+  <img style="padding: 0; margin: 0;" height="80px" src="https://nlux.dev/nlux-logo/nlux-logo-main.png"/><br />
+  The Node.js Middleware For Building Context-Aware Conversational AI Apps ✨💬
+</p>
+<p align=center>
+  <img alt="Free & Open Source" src="https://img.shields.io/badge/Free%20%26%20Open%20Source-1ccb61" />
+  <a href="https://www.npmjs.com/package/@nlbridge/express"><img alt="npm @nlux/react" src="https://img.shields.io/badge/NPM-@nlbridge/express-1ccb61" /></a>
+</p>
+<p align="center">
+  <code>nlbridge</code> is part of the <a href="https://nlux.dev">nlux</a> project ― a collection of  
+  <br />
+  open-source libraries for building conversational AI interfaces.
+</p>
+<p align="center">
+    <a href="https://nlux.dev/nlbridge">Docs Website</a> | <a href="https://discord.gg/SRwDmZghNB">Discord Community</a> | <a href="https://twitter.com/nluxai">X</a>
+</p>
 
-## The Node.js Middleware For Building Conversational AI Apps ✨💬
+------
 
 `nlbridge` is an open-source Node.js library that enables building powerful APIs to integrate large language models
-(LLMs) like ChatGPT into your website or app. It integrates perfectly with `nlux`, the React and JS library for
-conversational UIs, but it can also be used independently with any server or client.
+(LLMs) like ChatGPT into your website or app. It integrates perfectly with `nlux`, the React JS and Javascript library
+for conversational UIs, but it can also be used independently with any server or client.
 
 ## Key Features 🌟
 

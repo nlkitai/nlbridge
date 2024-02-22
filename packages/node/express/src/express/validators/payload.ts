@@ -1,6 +1,9 @@
 import {ActionId} from '@nlbridge/core';
 import {validPayloadForChat} from './actions/chat';
 import {validatePayloadForChatStream} from './actions/chatStream';
+import {validPayloadForAssist} from './assistant/assist';
+import {isValidatePayloadForRegisterTask} from './assistant/registerTask';
+import {isValidatePayloadForUnregisterTask} from './assistant/unregisterTask';
 import {isValidPayloadForClearContext} from './context/clearContext';
 import {validatePayloadForGetContextData} from './context/getContextData';
 import {validatePayloadForSetContext} from './context/setContext';
@@ -26,6 +29,12 @@ export const validatePayloadForAction = <T>(actionId: ActionId, payload: any): {
             return validatePayloadForGetContextData(payload);
         case 'clear-context':
             return isValidPayloadForClearContext(payload);
+        case 'assist':
+            return validPayloadForAssist(payload);
+        case 'register-task':
+            return isValidatePayloadForRegisterTask(payload);
+        case 'unregister-task':
+            return isValidatePayloadForUnregisterTask(payload);
         default:
             return {
                 success: false,

@@ -1,5 +1,5 @@
 import {SetContextHandler} from '../../interfaces/context/set';
-import {inMemoryDemoContextStore} from './context';
+import {inMemoryDataContextStore} from './context';
 
 export const setContext: SetContextHandler = async (
     initialData,
@@ -11,7 +11,7 @@ export const setContext: SetContextHandler = async (
     let newContextId: string | undefined = undefined;
     do {
         newContextId = Math.random().toString(36).substring(2, 14);
-        if (inMemoryDemoContextStore[newContextId]) {
+        if (inMemoryDataContextStore[newContextId]) {
             newContextId = '';
         }
     }
@@ -20,7 +20,7 @@ export const setContext: SetContextHandler = async (
     //
     // Set data for the new context
     //
-    inMemoryDemoContextStore[newContextId] = {
+    inMemoryDataContextStore[newContextId] = {
         ...initialData,
     };
 

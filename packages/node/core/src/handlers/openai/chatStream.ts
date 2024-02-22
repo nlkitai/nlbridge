@@ -1,5 +1,7 @@
 import OpenAI from 'openai';
+import process from 'process';
 import {ChatStreamHandler} from '../../interfaces/chat/chatStream';
+import {provideContexToLlm} from '../../internal/instructions/context';
 import {ActionExtras} from '../../internal/types/actionExtras';
 import {warn} from '../../internal/utils/warn';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from './types';
@@ -9,16 +11,34 @@ export const openAiChatStream: ChatStreamHandler = async (
     observer,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ) => {
-    const openai = new OpenAI(); // TODO - make this configurable
+    const openai = new OpenAI({
+        apiKey: extras.config?.apiKey || process.env.OPENAI_API_KEY || '',
+    });
+
     const messagesToSend: Array<
         OpenAI.Chat.Completions.ChatCompletionSystemMessageParam |
         OpenAI.Chat.Completions.ChatCompletionUserMessageParam |
         OpenAI.Chat.Completions.ChatCompletionAssistantMessageParam
     > = [];
 
-    // TODO - Handle history
-    // TODO - Handle context
-    // TODO - Handle system messages
+    if (extras.getContextData) {
+        const contextData = await extras.getContextData();
+        if (contextData) {
+            messagesToSend.push({
+                role: 'system',
+                content: provideContexToLlm(contextData),
+            });
+        }
+    }
+
+    if (extras.conversationHistory) {
+        extras.conversationHistory.forEach((item) => {
+            messagesToSend.push({
+                role: item.role === 'ai' ? 'assistant' : (item.role === 'system' ? 'system' : 'user'),
+                content: item.message,
+            });
+        });
+    }
 
     messagesToSend.push({
         role: 'user',

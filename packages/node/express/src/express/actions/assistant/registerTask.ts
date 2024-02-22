@@ -1,11 +1,12 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
 
-export const getContextData = async (run: RunAction, payload: any, req: Request, res: Response) => {
+export const registerTask = async (run: RunAction, payload: any, req: Request, res: Response) => {
     const result = await run(
-        'get-context-data',
-        payload.contextId || undefined,
-        payload.key || undefined,
+        'register-task',
+        payload.contextId,
+        payload.taskId,
+        payload.parameters,
         {},
     );
 
@@ -20,9 +21,5 @@ export const getContextData = async (run: RunAction, payload: any, req: Request,
 
     res.status(200).send({
         success: true,
-        result: {
-            data: result.data,
-            tasks: result.tasks,
-        },
     });
 };

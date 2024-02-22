@@ -7,8 +7,11 @@ const actionsList = [
     'clear-context',
     'get-context-data',
 
-    // TODO - Add more actions
-    // 'remove-context'
+    'register-task',
+    'unregister-task',
+    'assist',
+
+    // TODO - More context actions
     // 'upload-voice-message'
     // 'respond-to-voice-message'
     // 'upload-file'

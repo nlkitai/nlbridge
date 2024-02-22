@@ -48,6 +48,24 @@ export const createRuntime = <RuntimeConfig = any>(
                 };
             }
 
+            // When contextId is present and no getTasksData is provided, we provide a default implementation
+            // that uses the 'get-tasks-data' action to fetch the task data!
+            if (extras.contextId && !extras.getTasksData) {
+                extrasWithConfig.getTasksData = async () => {
+                    const result = await actionHandlers['get-context-data'](
+                        extras.contextId,
+                        undefined,
+                        extrasWithConfig,
+                    );
+
+                    if (!result || !result.success) {
+                        return undefined;
+                    }
+
+                    return result.tasks;
+                };
+            }
+
             return callback(
                 // @ts-ignore
                 ...paramsWithoutExtras,

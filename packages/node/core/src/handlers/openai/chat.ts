@@ -1,11 +1,14 @@
 import OpenAI from 'openai';
+import process from 'process';
 import {ChatHandler} from '../../interfaces/chat/chat';
-import {contextInstruction} from '../../internal/instructions/context';
+import {provideContexToLlm} from '../../internal/instructions/context';
 import {ActionExtras} from '../../internal/types/actionExtras';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from './types';
 
 export const openAiChat: ChatHandler = async (prompt, extras: ActionExtras<OpenAiRuntimeConfig>) => {
-    const openai = new OpenAI(); // TODO - make this configurable
+    const openai = new OpenAI({
+        apiKey: extras.config?.apiKey || process.env.OPENAI_API_KEY || '',
+    });
 
     const messagesToSend: Array<
         OpenAI.Chat.Completions.ChatCompletionSystemMessageParam |
@@ -18,13 +21,19 @@ export const openAiChat: ChatHandler = async (prompt, extras: ActionExtras<OpenA
         if (contextData) {
             messagesToSend.push({
                 role: 'system',
-                content: contextInstruction(contextData),
+                content: provideContexToLlm(contextData),
             });
         }
     }
 
-    // TODO - Handle history
-    // TODO - Handle system messages
+    if (extras.conversationHistory) {
+        extras.conversationHistory.forEach((item) => {
+            messagesToSend.push({
+                role: item.role === 'ai' ? 'assistant' : (item.role === 'system' ? 'system' : 'user'),
+                content: item.message,
+            });
+        });
+    }
 
     messagesToSend.push({
         role: 'user',

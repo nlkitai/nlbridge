@@ -1,20 +1,20 @@
 import {UpdateContextHandler} from '../../interfaces/context/update';
-import {inMemoryDemoContextStore} from './context';
+import {inMemoryDataContextStore} from './context';
 
 export const updateContext: UpdateContextHandler = async (
     contextId,
     data,
     extras,
 ) => {
-    if (!inMemoryDemoContextStore[contextId]) {
+    if (!inMemoryDataContextStore[contextId]) {
         return {
             success: false,
             error: 'Context not found',
         };
     }
 
-    inMemoryDemoContextStore[contextId] = {
-        ...inMemoryDemoContextStore[contextId],
+    inMemoryDataContextStore[contextId] = {
+        ...inMemoryDataContextStore[contextId],
         ...data,
     };
 
