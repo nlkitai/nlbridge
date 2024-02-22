@@ -1,7 +1,6 @@
 # nlbridge
 
 <p align=center>
-  <img style="padding: 0; margin: 0;" height="80px" src="https://nlux.dev/nlux-logo/nlux-logo-main.png"/><br />
   The Node.js Middleware For Building Context-Aware Conversational AI Apps ✨💬
 </p>
 <p align=center>
