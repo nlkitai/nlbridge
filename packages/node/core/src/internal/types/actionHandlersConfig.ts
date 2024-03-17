@@ -1,26 +1,34 @@
-import {AssistHandler} from '../../interfaces/assistant/assist';
-import {RegisterTaskHandler} from '../../interfaces/assistant/registerTask';
-import {UnregisterTaskHandler} from '../../interfaces/assistant/unregisterTask';
+import {AssistHandler} from '../../interfaces/chat/assist';
 import {ChatHandler} from '../../interfaces/chat/chat';
 import {ChatStreamHandler} from '../../interfaces/chat/chatStream';
-import {ClearContextHandler} from '../../interfaces/context/clear';
-import {GetContextDataHandler} from '../../interfaces/context/get';
-import {SetContextHandler} from '../../interfaces/context/set';
-import {UpdateContextHandler} from '../../interfaces/context/update';
+import {CreateContextHandler} from '../../interfaces/context/create';
+import {DiscardContextHandler} from '../../interfaces/context/discard';
+import {GetContextHandler} from '../../interfaces/context/get';
+import {RemoveContextItemsHandler} from '../../interfaces/context/removeItems';
+import {RemoveContextTasksHandler} from '../../interfaces/context/removeTasks';
+import {ResetContextItemsHandler} from '../../interfaces/context/resetItems';
+import {ResetContextTasksHandler} from '../../interfaces/context/resetTasks';
+import {UpdateContextItemsHandler} from '../../interfaces/context/updateItems';
+import {UpdateContextTasksHandler} from '../../interfaces/context/updateTasks';
 
 export type ActionHandlerConfig = {
     // Chat handlers
     'chat': ChatHandler;
     'chat-stream': ChatStreamHandler;
+    'assist': AssistHandler;
 
     // Context handlers
-    'set-context': SetContextHandler;
-    'update-context': UpdateContextHandler;
-    'get-context-data': GetContextDataHandler;
-    'clear-context': ClearContextHandler;
+    'create-context': CreateContextHandler;
+    'get-context': GetContextHandler;
+    'discard-context': DiscardContextHandler;
 
-    // Assistant handlers
-    'assist': AssistHandler;
-    'register-task': RegisterTaskHandler;
-    'unregister-task': UnregisterTaskHandler;
+    // Context data handlers
+    'reset-items': ResetContextItemsHandler;
+    'update-items': UpdateContextItemsHandler;
+    'remove-items': RemoveContextItemsHandler;
+
+    // Task handlers
+    'reset-tasks': ResetContextTasksHandler;
+    'update-tasks': UpdateContextTasksHandler;
+    'remove-tasks': RemoveContextTasksHandler;
 };

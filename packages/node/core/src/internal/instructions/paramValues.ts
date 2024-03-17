@@ -1,5 +1,5 @@
 import instructions from '../../instructions/param-values.nl.txt';
-import {ContextTask} from '../types/context';
+import {ContextTask} from '../types/data';
 
 export const getInstructionToExtractParamValues = (
     task: ContextTask,
@@ -9,14 +9,14 @@ export const getInstructionToExtractParamValues = (
     }
 
     const naturalLanguageInstructions = instructions as string;
-    const serializedParams = task.parameters.map((description, index) => {
+    const serializedParams = task.paramDescriptions.map((description, index) => {
         return `<Parameter#${index + 1}>`;
     }).join(', ');
 
     const paramsArrayTemplate = '[' + serializedParams + ']';
 
     let instructionsToReplaceParams = '';
-    task.parameters.forEach((description, index) => {
+    task.paramDescriptions.forEach((description, index) => {
         instructionsToReplaceParams += `The value for the parameter <Parameter#${index + 1}> : ${description}\n`;
     });
 

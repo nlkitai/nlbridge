@@ -21,8 +21,8 @@ export const openAiChatStream: ChatStreamHandler = async (
         OpenAI.Chat.Completions.ChatCompletionAssistantMessageParam
     > = [];
 
-    if (extras.getContextData) {
-        const contextData = await extras.getContextData();
+    if (extras.getContextItems) {
+        const contextData = await extras.getContextItems();
         if (contextData) {
             messagesToSend.push({
                 role: 'system',

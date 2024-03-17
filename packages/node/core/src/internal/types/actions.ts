@@ -1,20 +1,19 @@
 const actionsList = [
     'chat',
     'chat-stream',
-
-    'set-context',
-    'update-context',
-    'clear-context',
-    'get-context-data',
-
-    'register-task',
-    'unregister-task',
     'assist',
 
-    // TODO - More context actions
-    // 'upload-voice-message'
-    // 'respond-to-voice-message'
-    // 'upload-file'
+    'create-context',
+    'discard-context',
+    'get-context',
+
+    'reset-context-items',
+    'update-context-items',
+    'remove-context-items',
+
+    'reset-context-tasks',
+    'update-context-tasks',
+    'remove-context-tasks',
 ];
 
 export type ActionId = typeof actionsList[number];

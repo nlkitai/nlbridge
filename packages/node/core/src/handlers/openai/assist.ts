@@ -8,7 +8,7 @@ import {getParamValues} from './utils/getParamValues';
 import {getTaskToPerform} from './utils/getTaskToPerform';
 
 export const openAiAssist: ChatHandler = async (prompt, extras: ActionExtras<OpenAiRuntimeConfig>) => {
-    const contextData = extras.getContextData ? await extras.getContextData() : undefined;
+    const contextData = extras.getContextItems ? await extras.getContextItems() : undefined;
     const task = await getTaskToPerform(prompt, contextData, extras);
     const paramValues = task ? await getParamValues(prompt, task, contextData, extras) : undefined;
 

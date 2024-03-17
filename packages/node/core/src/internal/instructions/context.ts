@@ -1,7 +1,7 @@
 import instructions from '../../instructions/context.nl.txt';
-import {ContextData} from '../types/context';
+import {ContextItems} from '../types/data';
 
-export const provideContexToLlm = (contextData: ContextData) => {
+export const provideContexToLlm = (contextData: ContextItems) => {
     const serializedContext = JSON.stringify(contextData, null, 2);
 
     if (typeof instructions === 'string' && instructions) {

@@ -1,7 +1,7 @@
 import instructions from '../../instructions/task-name.nl.txt';
-import {ContextTaskData} from '../types/context';
+import {ContextTasks} from '../types/data';
 
-export const getInstructionToExtractTaskName = (tasksData: ContextTaskData) => {
+export const getInstructionToExtractTaskName = (tasksData: ContextTasks) => {
     const serializedTasksData = JSON.stringify(tasksData, null, 2);
 
     if (typeof instructions !== 'string' && !instructions) {

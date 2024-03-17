@@ -1,3 +1,5 @@
+// Action types
+
 export type {
     ActionId,
 } from './internal/types/actions';
@@ -11,6 +13,12 @@ export type {
 } from './internal/types/actionExtras';
 
 export type {
+    ActionHandlerConfig,
+} from './internal/types/actionHandlersConfig';
+
+// Chat types
+
+export type {
     ChatStreamHandler,
     ChatStreamObserver,
 } from './interfaces/chat/chatStream';
@@ -20,30 +28,76 @@ export type {
     ChatHandler,
 } from './interfaces/chat/chat';
 
-export type {
-    ClearContextHandler,
-} from './interfaces/context/clear';
+// Data types
 
 export type {
-    GetContextDataHandler,
+    ContextItems,
+    ContextItemDataType,
+    ContextItem,
+    ContextObject,
+    ContextTask,
+    ContextTasks,
+} from './internal/types/data';
+
+// Context handlers
+
+export type {
+    CreateContextHandler,
+    CreateContextResult,
+} from './interfaces/context/create';
+
+export type {
+    GetContextHandler,
+    GetContextResult,
 } from './interfaces/context/get';
 
 export type {
-    SetContextHandler,
-} from './interfaces/context/set';
+    DiscardContextHandler,
+    DiscardContextResult,
+} from './interfaces/context/discard';
+
+// Context items handlers
 
 export type {
-    UpdateContextHandler,
-} from './interfaces/context/update';
+    ResetContextItemsHandler,
+    ResetContextItemsResult,
+} from './interfaces/context/resetItems';
 
 export type {
-    ActionHandlerConfig,
-} from './internal/types/actionHandlersConfig';
+    UpdateContextItemsHandler,
+    UpdateContextItemsResult,
+} from './interfaces/context/updateItems';
+
+export type {
+    RemoveContextItemsHandler,
+    RemoveContextItemsResult,
+} from './interfaces/context/removeItems';
+
+// Context task handlers
+
+export type {
+    ResetContextTasksHandler,
+    ResetContextTasksResult,
+} from './interfaces/context/resetTasks';
+
+export type {
+    UpdateContextTasksHandler,
+    UpdateContextTasksResult,
+} from './interfaces/context/updateTasks';
+
+export type {
+    RemoveContextTasksHandler,
+    RemoveContextTasksResult,
+} from './interfaces/context/removeTasks';
+
+// OpenAI types
 
 export type {
     OpenAiChatModel,
     OpenAiRuntimeConfig,
 } from './handlers/openai/types';
+
+// Actions and implementations
 
 export {
     actionIds,

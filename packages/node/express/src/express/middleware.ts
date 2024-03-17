@@ -11,16 +11,41 @@ import {NextFunction, Request, Response} from 'express';
 import {error} from '../utils/error';
 import {warn} from '../utils/warn';
 import {assist} from './actions/assistant/assist';
-import {registerTask} from './actions/assistant/registerTask';
-import {unregisterTask} from './actions/assistant/unregisterTask';
 import {chat} from './actions/chat/chat';
 import {chatStream} from './actions/chat/chatStream';
-import {clearContext} from './actions/context/clearContext';
-import {getContextData} from './actions/context/getContextData';
-import {setContext} from './actions/context/setContext';
-import {updateContext} from './actions/context/updateContext';
+import {createContext} from './actions/context/create';
+import {discardContext} from './actions/context/discard';
+import {getContext} from './actions/context/get';
+import {removeItems} from './actions/context/removeItems';
+import {removeTasks} from './actions/context/removeTasks';
+import {resetItems} from './actions/context/resetItems';
+import {resetTasks} from './actions/context/resetTasks';
+import {updateItems} from './actions/context/updateItems';
+import {updateTasks} from './actions/context/updateTasks';
 import {MiddlewareConfig} from './config';
 import {validatePayloadForAction} from './validators/payload';
+
+const actionById: {
+    [key: string]: (
+        run: any, payload: any, req: Request, res: Response,
+    ) => void | Promise<void>
+} = {
+    'chat': chat,
+    'chat-stream': chatStream,
+    'assist': assist,
+
+    'create-context': createContext,
+    'get-context': getContext,
+    'discard-context': discardContext,
+
+    'reset-context-items': resetItems,
+    'update-context-items': updateItems,
+    'remove-context-items': removeItems,
+
+    'reset-context-tasks': resetTasks,
+    'update-context-tasks': updateTasks,
+    'remove-context-tasks': removeTasks,
+};
 
 export const defaultMiddleware = (
     api: 'openai',
@@ -120,42 +145,25 @@ export const middleware = (
             return;
         }
 
-        switch (actionId) {
-            case 'chat-stream':
-                chatStream(run, payload, req, res);
-                return;
-            case 'chat':
-                await chat(run, payload, req, res);
-                return;
-            case 'set-context':
-                await setContext(run, payload, req, res);
-                return;
-            case 'get-context-data':
-                await getContextData(run, payload, req, res);
-                return;
-            case 'update-context':
-                await updateContext(run, payload, req, res);
-                return;
-            case 'clear-context':
-                await clearContext(run, payload, req, res);
-                return;
-            case 'register-task':
-                await registerTask(run, payload, req, res);
-                return;
-            case 'unregister-task':
-                await unregisterTask(run, payload, req, res);
-                return;
-            case 'assist':
-                await assist(run, payload, req, res);
-                return;
-
-            default:
-                res.status(500).send(
-                    {
-                        status: 'error',
-                        message: `The action provided "${actionId}" is not supported.`,
-                    },
-                );
+        //
+        // Execute the action
+        //
+        const actionHandler = actionById[actionId];
+        if (actionHandler) {
+            try {
+                await actionHandler(run, payload, req, res);
+            } catch (e) {
+                error(`@nlbridge/express middleware encountered an error when handling the request: ${e?.toString()}`);
+                res.status(500).send('Internal server error.');
+            }
+            return;
         }
+
+        res.status(500).send(
+            {
+                status: 'error',
+                message: `The action provided "${actionId}" is not supported.`,
+            },
+        );
     };
 };

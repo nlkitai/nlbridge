@@ -16,8 +16,8 @@ export const openAiChat: ChatHandler = async (prompt, extras: ActionExtras<OpenA
         OpenAI.Chat.Completions.ChatCompletionAssistantMessageParam
     > = [];
 
-    if (extras.getContextData) {
-        const contextData = await extras.getContextData();
+    if (extras.getContextItems) {
+        const contextData = await extras.getContextItems();
         if (contextData) {
             messagesToSend.push({
                 role: 'system',

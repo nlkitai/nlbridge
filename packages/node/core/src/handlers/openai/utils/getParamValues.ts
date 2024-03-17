@@ -2,14 +2,14 @@ import OpenAI from 'openai';
 import {provideContexToLlm} from '../../../internal/instructions/context';
 import {getInstructionToExtractParamValues} from '../../../internal/instructions/paramValues';
 import {ActionExtras} from '../../../internal/types/actionExtras';
-import {ContextData, ContextTask} from '../../../internal/types/context';
+import {ContextItems, ContextTask} from '../../../internal/types/data';
 import {error} from '../../../utils/error';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from '../types';
 
 export const getParamValues = async (
     message: string,
     task: ContextTask,
-    contextData: ContextData | undefined,
+    contextData: ContextItems | undefined,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ): Promise<any[] | undefined> => {
     if (!contextData) {

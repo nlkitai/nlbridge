@@ -30,13 +30,14 @@ export const createRuntime = <RuntimeConfig = any>(
                 ? {...extras, config}
                 : {config};
 
-            // When contextId is present and no getContextData is provided, we provide a default implementation
+            // When contextId is present and no getContext is provided, we provide a default implementation
             // that uses the 'get-context-data' action to fetch the context data!
-            if (extras.contextId && !extras.getContextData) {
-                extrasWithConfig.getContextData = async (itemId?: string) => {
-                    const result = await actionHandlers['get-context-data'](
+            if (extras.contextId && !extras.getContextItems) {
+                extrasWithConfig.getContextItems = async (itemId?: string) => {
+                    const result = await actionHandlers['get-context'](
                         extras.contextId,
                         itemId,
+                        'data',
                         extrasWithConfig,
                     );
 
@@ -44,17 +45,18 @@ export const createRuntime = <RuntimeConfig = any>(
                         return undefined;
                     }
 
-                    return result.data;
+                    return result.items;
                 };
             }
 
-            // When contextId is present and no getTasksData is provided, we provide a default implementation
+            // When contextId is present and no getContextTasks is provided, we provide a default implementation
             // that uses the 'get-tasks-data' action to fetch the task data!
-            if (extras.contextId && !extras.getTasksData) {
-                extrasWithConfig.getTasksData = async () => {
-                    const result = await actionHandlers['get-context-data'](
+            if (extras.contextId && !extras.getContextTasks) {
+                extrasWithConfig.getContextTasks = async (taskId?: string) => {
+                    const result = await actionHandlers['get-context'](
                         extras.contextId,
-                        undefined,
+                        taskId,
+                        'task',
                         extrasWithConfig,
                     );
 

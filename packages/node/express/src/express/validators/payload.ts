@@ -1,13 +1,16 @@
 import {ActionId} from '@nlbridge/core';
-import {validPayloadForChat} from './actions/chat';
-import {validatePayloadForChatStream} from './actions/chatStream';
-import {validPayloadForAssist} from './assistant/assist';
-import {isValidatePayloadForRegisterTask} from './assistant/registerTask';
-import {isValidatePayloadForUnregisterTask} from './assistant/unregisterTask';
-import {isValidPayloadForClearContext} from './context/clearContext';
-import {validatePayloadForGetContextData} from './context/getContextData';
-import {validatePayloadForSetContext} from './context/setContext';
-import {validatePayloadForUpdateContext} from './context/updateContext';
+import {validPayloadForAssist} from './chat/assist';
+import {validPayloadForChat} from './chat/chat';
+import {validatePayloadForChatStream} from './chat/chatStream';
+import {validatePayloadForCreateContext} from './context/createContext';
+import {isValidPayloadForDiscardContext} from './context/discardContext';
+import {validatePayloadForGetContext} from './context/getContext';
+import {validatePayloadForRemoveContextItems} from './context/removeContextItems';
+import {validatePayloadForRemoveContextTasks} from './context/removeContextTasks';
+import {validatePayloadForResetContextItems} from './context/resetContextItems';
+import {validatePayloadForResetContextTasks} from './context/resetContextTasks';
+import {validatePayloadForUpdateContextItems} from './context/updateContextItems';
+import {validatePayloadForUpdateContextTasks} from './context/updateContextTasks';
 
 export const validatePayloadForAction = <T>(actionId: ActionId, payload: any): {
     success: false;
@@ -21,20 +24,30 @@ export const validatePayloadForAction = <T>(actionId: ActionId, payload: any): {
             return validPayloadForChat(payload);
         case 'chat-stream':
             return validatePayloadForChatStream(payload);
-        case 'set-context':
-            return validatePayloadForSetContext(payload);
-        case 'update-context':
-            return validatePayloadForUpdateContext(payload);
-        case 'get-context-data':
-            return validatePayloadForGetContextData(payload);
-        case 'clear-context':
-            return isValidPayloadForClearContext(payload);
         case 'assist':
             return validPayloadForAssist(payload);
-        case 'register-task':
-            return isValidatePayloadForRegisterTask(payload);
-        case 'unregister-task':
-            return isValidatePayloadForUnregisterTask(payload);
+
+        case 'create-context':
+            return validatePayloadForCreateContext(payload);
+        case 'get-context':
+            return validatePayloadForGetContext(payload);
+        case 'discard-context':
+            return isValidPayloadForDiscardContext(payload);
+
+        case 'reset-context-items':
+            return validatePayloadForResetContextItems(payload);
+        case 'update-context-items':
+            return validatePayloadForUpdateContextItems(payload);
+        case 'remove-context-items':
+            return validatePayloadForRemoveContextItems(payload);
+
+        case 'reset-context-tasks':
+            return validatePayloadForResetContextTasks(payload);
+        case 'update-context-tasks':
+            return validatePayloadForUpdateContextTasks(payload);
+        case 'remove-context-tasks':
+            return validatePayloadForRemoveContextTasks(payload);
+
         default:
             return {
                 success: false,

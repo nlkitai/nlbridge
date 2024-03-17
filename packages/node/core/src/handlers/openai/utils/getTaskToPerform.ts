@@ -2,24 +2,24 @@ import OpenAI from 'openai';
 import {provideContexToLlm} from '../../../internal/instructions/context';
 import {getInstructionToExtractTaskName} from '../../../internal/instructions/taskName';
 import {ActionExtras} from '../../../internal/types/actionExtras';
-import {ContextData, ContextTask} from '../../../internal/types/context';
+import {ContextItems, ContextTask} from '../../../internal/types/data';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from '../types';
 import {isValidTaskName} from './isValidTaskName';
 
 export const getTaskToPerform = async (
     message: string,
-    contextData: ContextData | undefined,
+    contextData: ContextItems | undefined,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ): Promise<ContextTask | undefined> => {
     if (!contextData) {
         return;
     }
 
-    if (!extras.getTasksData) {
+    if (!extras.getContextTasks) {
         return;
     }
 
-    const tasksData = await extras.getTasksData();
+    const tasksData = await extras.getContextTasks();
     if (!tasksData) {
         return;
     }
@@ -90,15 +90,13 @@ export const getTaskToPerform = async (
     }
 
     const task = tasksData[taskName];
-    if (!task.parameters || task.parameters.length === 0) {
-        return {
-            taskId: taskName,
-            parameters: [],
-        };
-    }
+    const paramDescriptions = (!task.paramDescriptions || task.paramDescriptions.length === 0)
+        ? []
+        : task.paramDescriptions;
 
     return {
         taskId: taskName,
-        parameters: task.parameters,
+        description: task.description,
+        paramDescriptions,
     };
 };

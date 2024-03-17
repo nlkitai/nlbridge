@@ -1,17 +1,18 @@
 import {ActionExtras} from '../../internal/types/actionExtras';
-import {ContextData, ContextTaskData} from '../../internal/types/context';
+import {ContextItems, ContextTasks} from '../../internal/types/data';
 
-export type GetContextDataResult = {
+export type GetContextResult = {
     success: true;
-    data: ContextData | undefined;
-    tasks: ContextTaskData | undefined;
+    items: ContextItems | undefined;
+    tasks: ContextTasks | undefined;
 } | {
     success: false;
     error: string;
 };
 
-export type GetContextDataHandler = (
+export type GetContextHandler = (
     contextId: string,
-    itemId: string | undefined,
+    itemOrTaskId: string | undefined,
+    type: 'data' | 'task' | undefined,
     extras: ActionExtras,
-) => Promise<GetContextDataResult>;
+) => Promise<GetContextResult>;
