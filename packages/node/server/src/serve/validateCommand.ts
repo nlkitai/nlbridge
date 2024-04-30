@@ -22,8 +22,10 @@ export const validateCommand = (): {
     const serveBinArg = cliArguments.length > nodeArgIndex + 1 ? cliArguments[nodeArgIndex + 1] : null;
     if (!serveBinArg || (
         !serveBinArg.endsWith('serve.js') &&
+        !serveBinArg.endsWith('serve.mjs') &&
         !serveBinArg.endsWith('.bin/nlbridge-serve') &&
-        !serveBinArg.endsWith('.bin/nlbridge-serve.js')
+        !serveBinArg.endsWith('.bin/nlbridge-serve.js') &&
+        !serveBinArg.endsWith('.bin/nlbridge-serve.mjs')
     )) {
         return {
             valid: false,
