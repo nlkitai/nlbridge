@@ -34,7 +34,8 @@ export const createServer = (config: ServerConfig) => {
                 .send({status: 404, message: err.message});
         }
 
-        res.status(500).send('Internal server error.');
+        error(`Internal server error occurred - ${err.message}`);
+        res.status(500).send('Internal server error occurred.');
     });
 
     // Register the server

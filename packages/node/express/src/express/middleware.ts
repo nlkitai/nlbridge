@@ -87,7 +87,10 @@ export const middleware = (
                 'Please ensure that the request body is available by using a body parser middleware before the @nlbridge/express middleware.',
             );
 
-            res.status(500).send('Internal server error.');
+            res.status(500).send(
+                'Internal nlbridge middleware error occurred.'
+            );
+
             return;
         }
 
@@ -154,7 +157,7 @@ export const middleware = (
                 await actionHandler(run, payload, req, res);
             } catch (e) {
                 error(`@nlbridge/express middleware encountered an error when handling the request: ${e?.toString()}`);
-                res.status(500).send('Internal server error.');
+                res.status(500).send('Internal server error while executing action.');
             }
             return;
         }
