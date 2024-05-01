@@ -2,7 +2,7 @@ import {ContextItems} from '../types/data';
 import {LlmInstructions} from '../types/llmInstructions';
 
 export const provideContextToLlm = (
-    contextData: ContextItems,
+    contextData: ContextItems | undefined,
     llmInstructions: LlmInstructions
 ) => {
     const serializedContext = JSON.stringify(contextData, null, 2);
