@@ -14,8 +14,8 @@ export const openAiAssist: ChatHandler = async (
 ) => {
     const llmInstructions: LlmInstructions = extras.getLlmInstructions();
     const contextData = extras.getContextItems ? await extras.getContextItems() : undefined;
-    const task = await getTaskToPerform(prompt, llmInstructions, contextData, extras);
-    const paramValues = task ? await getParamValues(prompt, task, llmInstructions, contextData, extras) : undefined;
+    const task = await getTaskToPerform(prompt, contextData, extras);
+    const paramValues = task ? await getParamValues(prompt, task, contextData, extras) : undefined;
 
     const openai = new OpenAI({
         apiKey: extras.config?.apiKey || process.env.OPENAI_API_KEY || '',

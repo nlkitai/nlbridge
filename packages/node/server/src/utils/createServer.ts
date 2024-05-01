@@ -49,7 +49,7 @@ export const createServer = (config: ServerConfig) => {
     }
 
     const middlewareConfig: MiddlewareConfig = {
-        apiKey: config.apiKey,
+        apiKey: config.apiKey
     }
 
     const nlbridge = defaultMiddleware(config.api, middlewareConfig);

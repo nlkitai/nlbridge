@@ -10,7 +10,6 @@ import {openAiDefaultChatModel, OpenAiRuntimeConfig} from '../types';
 export const getParamValues = async (
     message: string,
     task: ContextTask,
-    llmInstructions: LlmInstructions,
     contextData: ContextItems | undefined,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ): Promise<any[] | undefined> => {
@@ -18,6 +17,7 @@ export const getParamValues = async (
         return;
     }
 
+    const llmInstructions = extras.getLlmInstructions();
     const systemMessageForTaskParamsValues = getInstructionToExtractParamValues(task, llmInstructions);
     if (!systemMessageForTaskParamsValues) {
         return;

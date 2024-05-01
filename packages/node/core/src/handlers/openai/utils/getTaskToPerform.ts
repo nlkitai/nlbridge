@@ -9,7 +9,6 @@ import {isValidTaskName} from './isValidTaskName';
 
 export const getTaskToPerform = async (
     message: string,
-    llmInstructions: LlmInstructions,
     contextData: ContextItems | undefined,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ): Promise<ContextTask | undefined> => {
@@ -26,6 +25,7 @@ export const getTaskToPerform = async (
         return;
     }
 
+    const llmInstructions = extras.getLlmInstructions();
     const chatModel = extras.config?.chatModel || openAiDefaultChatModel;
     const systemMessageForContextData = provideContextToLlm(contextData, llmInstructions);
     const systemMessageToExtractInstruction = getInstructionToExtractTaskName(tasksData, llmInstructions);

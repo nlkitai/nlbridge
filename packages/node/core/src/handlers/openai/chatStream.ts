@@ -22,11 +22,12 @@ export const openAiChatStream: ChatStreamHandler = async (
     > = [];
 
     if (extras.getContextItems) {
+        const llmInstructions = extras.getLlmInstructions();
         const contextData = await extras.getContextItems();
         if (contextData) {
             messagesToSend.push({
                 role: 'system',
-                content: provideContextToLlm(contextData, extras.getLlmInstructions()),
+                content: provideContextToLlm(contextData, llmInstructions),
             });
         }
     }

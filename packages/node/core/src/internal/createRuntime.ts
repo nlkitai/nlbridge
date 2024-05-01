@@ -25,12 +25,15 @@ export const createRuntime = <RuntimeConfig = any>(
                 ? parameters.slice(0, -1)
                 : [];
 
-            const defaultLlmInstructions = getDefaultLlmInstructions();
-            const llmInstructionsToUse: LlmInstructions = {
-                context: llmInstructions?.context ?? defaultLlmInstructions.context,
-                parameterValues: llmInstructions?.parameterValues ?? defaultLlmInstructions.parameterValues,
-                taskName: llmInstructions?.taskName ?? defaultLlmInstructions.taskName,
-            };
+            const isDefaultLlmInstructionsNeeded = !llmInstructions || Object.keys(llmInstructions).length === 0;
+            const defaultLlmInstructions = isDefaultLlmInstructionsNeeded ? getDefaultLlmInstructions() : {};
+            const llmInstructionsToUse: LlmInstructions =  isDefaultLlmInstructionsNeeded
+                ? {
+                    context: llmInstructions?.context ?? defaultLlmInstructions.context,
+                    parameterValues: llmInstructions?.parameterValues ?? defaultLlmInstructions.parameterValues,
+                    taskName: llmInstructions?.taskName ?? defaultLlmInstructions.taskName,
+                }
+                : llmInstructions;
 
             const extrasWithConfig: ActionExtras<RuntimeConfig> = {
                 config,
@@ -59,10 +62,6 @@ export const createRuntime = <RuntimeConfig = any>(
 
                 if (typeof possibleExtras.getContextTasks === 'function') {
                     extrasWithConfig.getContextTasks = possibleExtras.getContextTasks;
-                }
-
-                if (typeof possibleExtras.getLlmInstructions === 'function') {
-                    extrasWithConfig.getLlmInstructions = possibleExtras.getLlmInstructions;
                 }
             }
 
