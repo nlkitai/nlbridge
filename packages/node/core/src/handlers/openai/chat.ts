@@ -9,8 +9,6 @@ export const openAiChat: ChatHandler = async (
     prompt,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ) => {
-    console.log('openAiChat handler');
-
     const llmInstructions = extras.getLlmInstructions();
     const contextData = extras.getContextItems ? await extras.getContextItems() : undefined;
 
@@ -40,12 +38,6 @@ export const openAiChat: ChatHandler = async (
         role: 'user',
         content: prompt,
     });
-
-    console.log('Conversation history from chat:');
-    console.dir(extras.conversationHistory);
-
-    console.log('Messages to send:');
-    console.dir(messagesToSend);
 
     const response = await openai.chat.completions.create({
         stream: false,

@@ -1,6 +1,6 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
-import {defaultExtras, defaultExtrasWithContextId} from '../../defaultExtras';
+import {defaultExtras, extrasFromPayload} from '../../defaultExtras';
 import {GetContextPayload} from '../../types/payloads/context/get';
 
 export const getContext = async (
@@ -14,7 +14,7 @@ export const getContext = async (
         payload.contextId,
         payload.itemId,
         payload.itemId ? 'task' : undefined,
-        defaultExtrasWithContextId(payload.contextId),
+        extrasFromPayload(payload),
     );
 
     if (!result.success) {

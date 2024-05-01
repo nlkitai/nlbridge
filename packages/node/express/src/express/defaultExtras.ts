@@ -4,7 +4,8 @@ export const defaultExtras: ActionExtras<OpenAiRuntimeConfig> = {
     getLlmInstructions: () => ({}),
 };
 
-export const defaultExtrasWithContextId = (contextId: string): ActionExtras<OpenAiRuntimeConfig> => ({
+export const extrasFromPayload = (payload: any): ActionExtras<OpenAiRuntimeConfig> => ({
     ...defaultExtras,
-    contextId,
+    contextId: typeof payload.contextId === 'string' ? payload.contextId : undefined,
+    conversationHistory: Array.isArray(payload.conversationHistory) ? payload.conversationHistory : undefined,
 });

@@ -1,12 +1,12 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
-import {defaultExtras, defaultExtrasWithContextId} from '../../defaultExtras';
+import {defaultExtras, extrasFromPayload} from '../../defaultExtras';
 
 export const assist = async (run: RunAction, payload: any, req: Request, res: Response) => {
     const outcome = await run(
         'assist',
         payload.message,
-        defaultExtrasWithContextId(payload.contextId),
+        extrasFromPayload(payload),
     );
 
     if (!outcome.success) {

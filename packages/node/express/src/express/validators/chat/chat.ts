@@ -1,4 +1,5 @@
 import {PayloadValidator} from '../../types/payloadValidator';
+import {isValidConversationHistory} from './isValidConversationHistory';
 
 export const validPayloadForChat: PayloadValidator = (
     payload,
@@ -15,6 +16,16 @@ export const validPayloadForChat: PayloadValidator = (
             success: false,
             error: 'payload.message is not a string',
         };
+    }
+
+    if (payload.conversationHistory) {
+        const historyValidation = isValidConversationHistory(payload.conversationHistory);
+        if (!historyValidation.success) {
+            return {
+                success: false,
+                error: historyValidation.error ?? 'payload.conversationHistory is invalid',
+            };
+        }
     }
 
     return {

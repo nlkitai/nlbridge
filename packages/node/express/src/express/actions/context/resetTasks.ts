@@ -1,6 +1,6 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
-import {defaultExtras, defaultExtrasWithContextId} from '../../defaultExtras';
+import {defaultExtras, extrasFromPayload} from '../../defaultExtras';
 import {ResetContextTasksPayload} from '../../types/payloads/context/resetTasks';
 
 export const resetTasks = async (
@@ -13,7 +13,7 @@ export const resetTasks = async (
         'reset-tasks',
         payload.contextId,
         payload.tasks,
-        defaultExtrasWithContextId(payload.contextId),
+        extrasFromPayload(payload),
     );
 
     if (!result.success) {
