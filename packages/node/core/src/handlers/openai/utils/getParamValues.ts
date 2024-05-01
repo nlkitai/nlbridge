@@ -3,7 +3,6 @@ import {provideContextToLlm} from '../../../internal/instructions/context';
 import {getInstructionToExtractParamValues} from '../../../internal/instructions/paramValues';
 import {ActionExtras} from '../../../internal/types/actionExtras';
 import {ContextItems, ContextTask} from '../../../internal/types/data';
-import {LlmInstructions} from '../../../internal/types/llmInstructions';
 import {error} from '../../../utils/error';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from '../types';
 

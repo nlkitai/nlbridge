@@ -27,7 +27,7 @@ const packageConfig: () => Promise<RollupOptions[]> = async () => ([
             esbuild(),
             isProduction && strip({
                 include: '**/*.(mjs|js|ts)',
-                functions: ['debug', 'console.log', 'console.info'],
+                functions: ['debug', 'console.debug'],
             }),
             replace({
                 values: {
