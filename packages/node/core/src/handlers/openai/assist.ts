@@ -13,8 +13,11 @@ export const openAiAssist: ChatHandler = async (
     prompt,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ) => {
+    console.log('openAiAssist handler');
+
     const llmInstructions: LlmInstructions = extras.getLlmInstructions();
     const contextData: ContextItems | undefined = extras.getContextItems ? await extras.getContextItems() : undefined;
+
     const task = await getTaskToPerform(prompt, contextData, extras);
     const paramValues = task ? await getParamValues(prompt, task, contextData, extras) : undefined;
 
@@ -23,13 +26,10 @@ export const openAiAssist: ChatHandler = async (
     });
 
     const messagesToSend: Array<OpenAI.Chat.Completions.ChatCompletionMessageParam> = [];
-    const systemMessageForContextData = provideContextToLlm(contextData, llmInstructions);
-    if (systemMessageForContextData) {
-        messagesToSend.push({
-            role: 'system',
-            content: systemMessageForContextData,
-        });
-    }
+    messagesToSend.push({
+        role: 'system',
+        content: provideContextToLlm(contextData, llmInstructions),
+    });
 
     if (task && paramValues) {
         messagesToSend.push({
@@ -52,6 +52,12 @@ export const openAiAssist: ChatHandler = async (
         role: 'user',
         content: prompt,
     });
+
+    console.log('Conversation history from chat:');
+    console.dir(extras.conversationHistory);
+
+    console.log('Messages to send:');
+    console.dir(messagesToSend);
 
     const response = await openai.chat.completions.create({
         stream: false,

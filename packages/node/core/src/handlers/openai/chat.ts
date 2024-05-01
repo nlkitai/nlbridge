@@ -9,6 +9,11 @@ export const openAiChat: ChatHandler = async (
     prompt,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ) => {
+    console.log('openAiChat handler');
+
+    const llmInstructions = extras.getLlmInstructions();
+    const contextData = extras.getContextItems ? await extras.getContextItems() : undefined;
+
     const openai = new OpenAI({
         apiKey: extras.config?.apiKey || process.env.OPENAI_API_KEY || '',
     });
@@ -19,30 +24,28 @@ export const openAiChat: ChatHandler = async (
         OpenAI.Chat.Completions.ChatCompletionAssistantMessageParam
     > = [];
 
-    if (extras.getContextItems) {
-        const llmInstructions = extras.getLlmInstructions();
-        const contextData = await extras.getContextItems();
-        if (contextData) {
-            messagesToSend.push({
-                role: 'system',
-                content: provideContextToLlm(contextData, llmInstructions),
-            });
-        }
-    }
+    messagesToSend.push({
+        role: 'system',
+        content: provideContextToLlm(contextData, llmInstructions),
+    });
 
-    if (extras.conversationHistory) {
-        extras.conversationHistory.forEach((item) => {
-            messagesToSend.push({
-                role: item.role === 'ai' ? 'assistant' : (item.role === 'system' ? 'system' : 'user'),
-                content: item.message,
-            });
+    extras.conversationHistory?.forEach((item) => {
+        messagesToSend.push({
+            role: item.role === 'ai' ? 'assistant' : (item.role === 'system' ? 'system' : 'user'),
+            content: item.message,
         });
-    }
+    });
 
     messagesToSend.push({
         role: 'user',
         content: prompt,
     });
+
+    console.log('Conversation history from chat:');
+    console.dir(extras.conversationHistory);
+
+    console.log('Messages to send:');
+    console.dir(messagesToSend);
 
     const response = await openai.chat.completions.create({
         stream: false,
