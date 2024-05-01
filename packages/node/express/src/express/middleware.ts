@@ -1,4 +1,5 @@
 import {
+    ActionExtras,
     ActionHandlerConfig,
     actionIds,
     asOpenAiChatModel,
@@ -64,6 +65,7 @@ export const middleware = (
     const model = asOpenAiChatModel(config.chatModel);
     const {run} = createRuntime<OpenAiRuntimeConfig>(
         actionHandlers,
+        config.llmInstructions,
         {
             apiKey: config.apiKey,
             chatModel: model,

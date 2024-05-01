@@ -1,5 +1,6 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
+import {defaultExtras} from '../../defaultExtras';
 import {CreateContextPayload} from '../../types/payloads/context/create';
 
 export const createContext = async (
@@ -11,7 +12,7 @@ export const createContext = async (
     const result = await run(
         'create-context',
         payload?.items,
-        {},
+        defaultExtras,
     );
 
     if (!result.success) {

@@ -1,5 +1,6 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
+import {defaultExtras, defaultExtrasWithContextId} from '../../defaultExtras';
 import {RemoveContextTasksPayload} from '../../types/payloads/context/removeTasks';
 
 export const removeTasks = async (
@@ -12,7 +13,7 @@ export const removeTasks = async (
         'remove-tasks',
         payload.contextId,
         payload.taskIds,
-        {},
+        defaultExtrasWithContextId(payload.contextId),
     );
 
     if (!result.success) {

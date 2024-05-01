@@ -1,14 +1,16 @@
 import OpenAI from 'openai';
-import {provideContexToLlm} from '../../../internal/instructions/context';
+import {provideContextToLlm} from '../../../internal/instructions/context';
 import {getInstructionToExtractParamValues} from '../../../internal/instructions/paramValues';
 import {ActionExtras} from '../../../internal/types/actionExtras';
 import {ContextItems, ContextTask} from '../../../internal/types/data';
+import {LlmInstructions} from '../../../internal/types/llmInstructions';
 import {error} from '../../../utils/error';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from '../types';
 
 export const getParamValues = async (
     message: string,
     task: ContextTask,
+    llmInstructions: LlmInstructions,
     contextData: ContextItems | undefined,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ): Promise<any[] | undefined> => {
@@ -16,13 +18,13 @@ export const getParamValues = async (
         return;
     }
 
-    const systemMessageForTaskParamsValues = getInstructionToExtractParamValues(task);
+    const systemMessageForTaskParamsValues = getInstructionToExtractParamValues(task, llmInstructions);
     if (!systemMessageForTaskParamsValues) {
         return;
     }
 
     const messagesToSend: Array<OpenAI.Chat.Completions.ChatCompletionMessageParam> = [];
-    const systemMessageForContextData = provideContexToLlm(contextData);
+    const systemMessageForContextData = provideContextToLlm(contextData, llmInstructions);
     if (systemMessageForContextData) {
         messagesToSend.push({
             role: 'system',

@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import process from 'process';
 import {ChatStreamHandler} from '../../interfaces/chat/chatStream';
-import {provideContexToLlm} from '../../internal/instructions/context';
+import {provideContextToLlm} from '../../internal/instructions/context';
 import {ActionExtras} from '../../internal/types/actionExtras';
 import {warn} from '../../internal/utils/warn';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from './types';
@@ -26,7 +26,7 @@ export const openAiChatStream: ChatStreamHandler = async (
         if (contextData) {
             messagesToSend.push({
                 role: 'system',
-                content: provideContexToLlm(contextData),
+                content: provideContextToLlm(contextData, extras.getLlmInstructions()),
             });
         }
     }

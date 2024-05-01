@@ -1,4 +1,4 @@
-import {defaultMiddleware} from '@nlbridge/express';
+import {defaultMiddleware, MiddlewareConfig} from '@nlbridge/express';
 import express, {NextFunction, Request, Response} from 'express';
 import {error} from './error';
 import {log} from './log';
@@ -48,7 +48,11 @@ export const createServer = (config: ServerConfig) => {
         log('');
     }
 
-    const nlbridge = defaultMiddleware(config.api, config);
+    const middlewareConfig: MiddlewareConfig = {
+        apiKey: config.apiKey,
+    }
+
+    const nlbridge = defaultMiddleware(config.api, middlewareConfig);
     app.post(endpoint, nlbridge);
 
     return app;

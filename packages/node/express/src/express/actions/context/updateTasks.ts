@@ -1,5 +1,6 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
+import {defaultExtras, defaultExtrasWithContextId} from '../../defaultExtras';
 import {UpdateContextTasksPayload} from '../../types/payloads/context/updateTasks';
 
 export const updateTasks = async (
@@ -12,7 +13,7 @@ export const updateTasks = async (
         'update-tasks',
         payload.contextId,
         payload.tasks,
-        {},
+        defaultExtrasWithContextId(payload.contextId),
     );
 
     if (!result.success) {

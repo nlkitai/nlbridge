@@ -39,6 +39,10 @@ export type {
     ContextTasks,
 } from './internal/types/data';
 
+export type {
+    LlmInstructions,
+} from './internal/types/llmInstructions';
+
 // Context handlers
 
 export type {

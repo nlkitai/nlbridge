@@ -1,14 +1,17 @@
-import instructions from '../../instructions/task-name.nl.txt';
 import {ContextTasks} from '../types/data';
+import {LlmInstructions} from '../types/llmInstructions';
 
-export const getInstructionToExtractTaskName = (tasksData: ContextTasks) => {
+export const getInstructionToExtractTaskName = (
+    tasksData: ContextTasks,
+    llmInstructions: LlmInstructions,
+) => {
     const serializedTasksData = JSON.stringify(tasksData, null, 2);
 
-    if (typeof instructions !== 'string' && !instructions) {
+    if (typeof llmInstructions.taskName !== 'string' && !llmInstructions.taskName) {
         return;
     }
 
-    const naturalLanguageInstructions = instructions as string;
+    const naturalLanguageInstructions = llmInstructions.taskName;
     return naturalLanguageInstructions
         .replace('{{tasks}}', '\n\n' + serializedTasksData + '\n\n');
 };

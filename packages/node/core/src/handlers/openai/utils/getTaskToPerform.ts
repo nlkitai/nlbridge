@@ -1,13 +1,15 @@
 import OpenAI from 'openai';
-import {provideContexToLlm} from '../../../internal/instructions/context';
+import {provideContextToLlm} from '../../../internal/instructions/context';
 import {getInstructionToExtractTaskName} from '../../../internal/instructions/taskName';
 import {ActionExtras} from '../../../internal/types/actionExtras';
 import {ContextItems, ContextTask} from '../../../internal/types/data';
+import {LlmInstructions} from '../../../internal/types/llmInstructions';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from '../types';
 import {isValidTaskName} from './isValidTaskName';
 
 export const getTaskToPerform = async (
     message: string,
+    llmInstructions: LlmInstructions,
     contextData: ContextItems | undefined,
     extras: ActionExtras<OpenAiRuntimeConfig>,
 ): Promise<ContextTask | undefined> => {
@@ -25,8 +27,8 @@ export const getTaskToPerform = async (
     }
 
     const chatModel = extras.config?.chatModel || openAiDefaultChatModel;
-    const systemMessageForContextData = provideContexToLlm(contextData);
-    const systemMessageToExtractInstruction = getInstructionToExtractTaskName(tasksData);
+    const systemMessageForContextData = provideContextToLlm(contextData, llmInstructions);
+    const systemMessageToExtractInstruction = getInstructionToExtractTaskName(tasksData, llmInstructions);
     if (!systemMessageToExtractInstruction || !systemMessageForContextData) {
         return;
     }

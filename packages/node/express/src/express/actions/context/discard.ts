@@ -1,5 +1,6 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
+import {defaultExtras, defaultExtrasWithContextId} from '../../defaultExtras';
 import {DiscardContextPayload} from '../../types/payloads/context/discard';
 
 export const discardContext = async (
@@ -11,7 +12,7 @@ export const discardContext = async (
     const result = await run(
         'discard-context',
         payload.contextId,
-        {},
+        defaultExtrasWithContextId(payload.contextId),
     );
 
     if (!result.success) {

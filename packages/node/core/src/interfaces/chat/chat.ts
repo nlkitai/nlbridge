@@ -8,4 +8,7 @@ export type ChatResult = {
     error: string;
 };
 
-export type ChatHandler = (prompt: string, extras: ActionExtras) => Promise<ChatResult>;
+export type ChatHandler = (
+    prompt: string,
+    extras: ActionExtras,
+) => Promise<ChatResult>;

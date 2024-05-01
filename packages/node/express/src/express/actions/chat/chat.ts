@@ -1,10 +1,14 @@
 import {RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
+import {defaultExtras, defaultExtrasWithContextId} from '../../defaultExtras';
 
 export const chat = async (run: RunAction, payload: any, req: Request, res: Response) => {
-    const outcome = await run('chat', payload.message, {
-        contextId: payload.contextId,
-    });
+    const outcome = await run(
+        'chat',
+        payload.message,
+        defaultExtrasWithContextId(payload.contextId),
+    );
+
     if (!outcome.success) {
         res.status(500).send({
             success: false,

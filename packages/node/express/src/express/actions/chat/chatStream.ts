@@ -2,6 +2,7 @@ import {ChatStreamObserver, RunAction} from '@nlbridge/core';
 import {Request, Response} from 'express';
 import {error} from '../../../utils/error';
 import {warn} from '../../../utils/warn';
+import {defaultExtras, defaultExtrasWithContextId} from '../../defaultExtras';
 
 export const chatStream = (run: RunAction, payload: any, req: Request, res: Response) => {
     let connectionEndedByClient = false;
@@ -36,6 +37,12 @@ export const chatStream = (run: RunAction, payload: any, req: Request, res: Resp
         connectionEndedByClient = true;
     });
 
-    run('chat-stream', payload.message, observer, {});
+    run(
+        'chat-stream',
+        payload.message,
+        observer,
+        defaultExtrasWithContextId(payload.contextId),
+    );
+
     return;
 };

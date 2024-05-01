@@ -1,16 +1,21 @@
 import OpenAI from 'openai';
 import * as process from 'process';
 import {ChatHandler} from '../../interfaces/chat/chat';
-import {provideContexToLlm} from '../../internal/instructions/context';
+import {provideContextToLlm} from '../../internal/instructions/context';
 import {ActionExtras} from '../../internal/types/actionExtras';
+import {LlmInstructions} from '../../internal/types/llmInstructions';
 import {openAiDefaultChatModel, OpenAiRuntimeConfig} from './types';
 import {getParamValues} from './utils/getParamValues';
 import {getTaskToPerform} from './utils/getTaskToPerform';
 
-export const openAiAssist: ChatHandler = async (prompt, extras: ActionExtras<OpenAiRuntimeConfig>) => {
+export const openAiAssist: ChatHandler = async (
+    prompt,
+    extras: ActionExtras<OpenAiRuntimeConfig>,
+) => {
+    const llmInstructions: LlmInstructions = extras.getLlmInstructions();
     const contextData = extras.getContextItems ? await extras.getContextItems() : undefined;
-    const task = await getTaskToPerform(prompt, contextData, extras);
-    const paramValues = task ? await getParamValues(prompt, task, contextData, extras) : undefined;
+    const task = await getTaskToPerform(prompt, llmInstructions, contextData, extras);
+    const paramValues = task ? await getParamValues(prompt, task, llmInstructions, contextData, extras) : undefined;
 
     const openai = new OpenAI({
         apiKey: extras.config?.apiKey || process.env.OPENAI_API_KEY || '',
@@ -18,7 +23,7 @@ export const openAiAssist: ChatHandler = async (prompt, extras: ActionExtras<Ope
 
     const messagesToSend: Array<OpenAI.Chat.Completions.ChatCompletionMessageParam> = [];
     if (contextData) {
-        const systemMessageForContextData = provideContexToLlm(contextData);
+        const systemMessageForContextData = provideContextToLlm(contextData, llmInstructions);
         if (systemMessageForContextData) {
             messagesToSend.push({
                 role: 'system',

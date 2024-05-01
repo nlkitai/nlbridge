@@ -1,14 +1,15 @@
-import instructions from '../../instructions/param-values.nl.txt';
 import {ContextTask} from '../types/data';
+import {LlmInstructions} from '../types/llmInstructions';
 
 export const getInstructionToExtractParamValues = (
     task: ContextTask,
+    llmInstructions: LlmInstructions,
 ): string | undefined => {
-    if (typeof instructions !== 'string' && !instructions) {
+    if (typeof llmInstructions.parameterValues !== 'string' && !llmInstructions.parameterValues) {
         return;
     }
 
-    const naturalLanguageInstructions = instructions as string;
+    const naturalLanguageInstructions = llmInstructions.parameterValues;
     const serializedParams = task.paramDescriptions.map((description, index) => {
         return `<Parameter#${index + 1}>`;
     }).join(', ');
