@@ -1,6 +1,6 @@
 {
   "inherit": true,
-  "nlbridge": "0.3.7",
+  "nlbridge": "0.3.9",
   "peerDependencies": {
   },
   "dependencies": {
