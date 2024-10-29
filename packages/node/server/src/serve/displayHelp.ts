@@ -12,7 +12,7 @@ export const displayHelp = () => {
         '                      Only OpenAPI is supported at the moment');
     log('');
     log('Optional:');
-    log('  --api-key <key>      The API key to use for the AI backend\n' +
+    log('  --apiKey <key>      The API key to use for the AI backend\n' +
         '                       Default: Read from environment variable (e.g. OPENAI_API_KEY)\n');
     log('  --port [port]        Port to use for HTTP server - Default: Random value between 8000 and 8999');
     log('  --cors <origin>      Enable CORS for the specified origin - Default: "*"');
