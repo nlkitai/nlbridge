@@ -11,10 +11,7 @@ export const isValidConversationHistory = (history: any) => {
             return true;
         }
 
-        if (
-            (item.role !== 'user' && item.role !== 'ai' && item.role !== 'system') ||
-            typeof item.message !== 'string'
-        ) {
+        if (!['user', 'ai', 'system', 'assistant'].includes(item.role) || typeof item.message !== 'string') {
             return true;
         }
     })) {
