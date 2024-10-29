@@ -50,7 +50,7 @@ export const createServer = (config: ServerConfig) => {
 
     const middlewareConfig: MiddlewareConfig = {
         apiKey: config.apiKey,
-        chatModel: 'gpt-4'
+        chatModel: 'gpt-4o'
     }
 
     const nlbridge = defaultMiddleware(config.api, middlewareConfig);
