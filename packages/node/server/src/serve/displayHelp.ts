@@ -8,8 +8,8 @@ export const displayHelp = () => {
     log('  @nlbridge/server [params]');
     log('');
     log('Required:');
-    log('  --api <openapi>     The AI backend to use\n' +
-        '                      Only OpenAPI is supported at the moment');
+    log('  --api <openai>     The AI backend to use\n' +
+        '                      Only OpenAI is supported at the moment');
     log('');
     log('Optional:');
     log('  --apiKey <key>      The API key to use for the AI backend\n' +

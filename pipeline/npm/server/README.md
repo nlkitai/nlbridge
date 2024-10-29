@@ -36,8 +36,8 @@ Usage:
   @nlbridge/server [params]
 
 Required:
-  --api <openapi>     The AI backend to use
-                      Only OpenAPI is supported at the moment
+  --api <openai>     The AI backend to use
+                      Only OpenAI is supported at the moment
 
 Optional:
   --apiKey <key>      The API key to use for the AI backend
